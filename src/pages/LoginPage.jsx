@@ -7,6 +7,8 @@ import {login_fail, login_success} from "../redux/reducers/user.js";
 import store from "../redux/store.js";
 import {useSelector} from "react-redux";
 import "./pages-css.scss"
+import {authentication} from "../services/authentication.js";
+import {Navigate} from "react-router-dom";
 
 export function LoginPage() {
 
@@ -21,25 +23,30 @@ export function LoginPage() {
         return hash.toString(CryptoJS.enc.Hex).toLowerCase();
     }
 
-    async function onSubmitHandle(e) {
+    async function onSubmitHandle() {
         setIsLoading(true)
-        // let body = {
-        //     login: user.login,
-        //     password: generateHash(user.login, user.password)
-        // }
+        let body = {
+            login: user.login,
+            password: generateHash(user.login, user.password)
+        }
         try {
-            // const response = await authentication(body)
-            // if (response.isSuccess === true) {
-            //     console.log(response)
-            //     store.dispatch(login_success(response.successEntity))
-            // } else {
-            //     store.dispatch(login_fail())
-            // }
+            const response = await authentication(body)
+            if (response.isSuccess === true) {
+                console.log(response)
+                store.dispatch(login_success(response.successEntity))
+            } else {
+                store.dispatch(login_fail())
+            }
         } catch (e) {
+            console.log(e);
             store.dispatch(login_fail());
         }
 
         setIsLoading(false)
+    }
+
+    if (isLoggedIn){
+        return <Navigate to="/courses" />;
     }
 
     return(
