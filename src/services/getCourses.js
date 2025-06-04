@@ -1,11 +1,11 @@
-export async function authentication(user) {
+export async function getCourses(studentId) {
     try {
-        const url = import.meta.env.REACT_BASE_URL + import.meta.env.REACT_USER_AUTHENTICATION;
+        const url = import.meta.env.REACT_BASE_URL + import.meta.env.REACT_COURSES + studentId;
 
         const response = await fetch(url, {
-            method: 'POST', headers: {
+            method: 'GET', headers: {
                 'Content-Type': 'application/json',
-            }, body: JSON.stringify(user)
+            }
         })
 
         return await response.json()

@@ -1,3 +1,5 @@
+import {DataGrid} from "devextreme-react";
+
 export function CoursesPage() {
 
     
@@ -9,7 +11,12 @@ export function CoursesPage() {
     return (<div>
         <h1>Мои курсы</h1>
         <div>
+            <DataGrid
+                columns={columns}
 
+            >
+
+            </DataGrid>
         </div>
     </div>)
 }

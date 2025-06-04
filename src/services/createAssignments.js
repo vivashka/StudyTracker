@@ -1,11 +1,11 @@
-export async function authentication(user) {
+export async function createAssignment(assignment) {
     try {
-        const url = import.meta.env.REACT_BASE_URL + import.meta.env.REACT_USER_AUTHENTICATION;
+        const url = import.meta.env.REACT_BASE_URL + import.meta.env.REACT_ASSIGNMENTS_CREATE;
 
         const response = await fetch(url, {
             method: 'POST', headers: {
                 'Content-Type': 'application/json',
-            }, body: JSON.stringify(user)
+            }, body: JSON.stringify(assignment)
         })
 
         return await response.json()
