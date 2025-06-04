@@ -1,3 +1,5 @@
+import {taskState} from "./Enums/TaskState.js";
+
 export const assignmentsGridModels = [{
     "visible": true,
     "dataField": "name",
@@ -15,15 +17,23 @@ export const assignmentsGridModels = [{
     {
         "visible": true,
         "dataField": "state",
-        "dataType": "integer",
         "caption": "Состояние",
-        "alignment": "left"
+        "alignment": "left",
+        lookup: {
+            dataSource: taskState,
+            valueExpr: "ID",
+            displayExpr: "Name"
+        }
+
     },
     {
         "visible": true,
-        "dataField": "deadline",
+        "dataField": "deadLine",
         "dataType": "datetime",
         "caption": "Срок сдачи",
-        "alignment": "left"
+        "alignment": "left",
+        calculateDisplayValue: function(rowData) {
+            return rowData.deadLine ? new Date(rowData.deadLine).toLocaleDateString() : "Не назначен";
+        }
     }
 ]

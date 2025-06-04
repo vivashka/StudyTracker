@@ -24,7 +24,20 @@ export function createAssignmentsDataStore(courseId) {
         },
         insert: async (values) => {
             try {
-                const response = await createAssignment(values);
+                const user = store.getState().user.user;
+                const requestModel = {
+                    assignments: {
+                        assignmentId : values.assignmentId,
+                        name: values.name,
+                        description: values.description,
+                        courseId: courseId,
+                        state: values.state,
+                        deadLine: values.deadLine
+                    },
+                    studentId : user.studentId
+                }
+                console.log(values)
+                const response = await createAssignment(requestModel);
                 console.log(response);
                 return response.successEntity;
             } catch (e) {

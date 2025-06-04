@@ -1,71 +1,43 @@
-import {DataGrid, Editing, Popup, Form} from 'devextreme-react/data-grid';
+import {DataGrid, Editing, Popup, Form, FilterRow} from 'devextreme-react/data-grid';
 import {courseColumns} from "../domain/CoursesGrid";
 import {coursesDataStore} from "../domain/coursesDataStore";
 import {Item} from "devextreme-react/form";
 import {useState} from "react";
-import {taskState} from "../domain/Enums/TaskState.js";
-import {assignmentsGridModels} from "../domain/assignmentsGridModels.js";
-import {createAssignmentsDataStore} from "../domain/assignmentsDataStore.js";
+import {Button} from "devextreme-react";
+import {Navigate} from "react-router-dom";
+import store from "../redux/store.js";
+import {logout} from "../redux/reducers/user.js";
+import {TasksGrid} from "../components/TasksGrid.jsx";
+import {TaskStudents} from "../components/TaskStudents.jsx";
 
 export function CoursesPage() {
-    const [tasks, setTasks] = useState([]);
+
 
     const [currentCourse, setCurrentCourse] = useState(null);
+    const user = store.getState().user;
 
     async function onCourseClick(course) {
         setCurrentCourse(course.data);
     }
 
     const hide = () => {
-        setTasks([])
+        setCurrentCourse([]);
     };
 
-    const TasksGrid = () => {
-        const assignmentsStore = currentCourse
-            ? createAssignmentsDataStore(currentCourse.courseId)
-            : null;
+    function onExit(){
+        store.dispatch(logout())
+    }
 
-        if (!assignmentsStore) return null;
-
-        return (
-            <DataGrid
-                dataSource={assignmentsStore}
-                columns={assignmentsGridModels}
-                height={200}
-                showScrollbar="always"
-            >
-                <Editing
-                    mode="popup"
-                    allowUpdating={true}
-                    allowAdding={true}
-                    allowDeleting={true}
-
-                >
-                    <Form>
-                        <Item dataField={"name"} caption={"Название"}/>
-                        <Item dataField={"description"} caption={"Описание"}/>
-                        <Item
-                            dataField="state"
-                            caption="Состояние"
-                            editorType="dxSelectBox"
-                            editorOptions={{
-                                dataSource: taskState,
-                                displayExpr: "Name",
-                                valueExpr: "ID"
-                            }}
-                        />
-                        <Item dataField={"deadLine"} caption={"Срок сдачи"}
-                              customizeText={(e) =>
-                                  e.value ? new Date(e.value).toLocaleDateString() : 'не назначен'
-                              } />
-                    </Form>
-                </Editing>
-            </DataGrid>
-        );
-    };
+    if (!user?.user){
+        return <Navigate to="/login" />;
+    }
 
     return <div>
-        <h1>Мои курсы</h1>
+        <header className={"main-header"}>
+            <h1>Мои курсы</h1>
+            <Button type={"danger"} onClick={onExit} text="Выход" />
+        </header>
+
         <div>
             <DataGrid
                 columns={courseColumns}
@@ -77,8 +49,8 @@ export function CoursesPage() {
                 <Editing
                     mode="popup"
                     allowUpdating={true}
-                    allowAdding={true}
-                    allowDeleting={true}
+                    allowAdding={user.user.isAdmin}
+                    allowDeleting={user.user.isAdmin}
 
                 >
                     <Popup
@@ -96,12 +68,21 @@ export function CoursesPage() {
 
                         </Item>
 
+                        <Item caption={'Студенты'}
+                            itemType="group"
+                            colCount={2}
+                            colSpan={2}>
+                           // <TaskStudents currentCourse={currentCourse} />
+
+                        </Item>
+
                         <Item itemType="group"
                               colCount={1}
                               colSpan={2}
                               caption={'Задания курса'}>
-                            {tasks && <TasksGrid/>}
+                            <TasksGrid currentCourse={currentCourse} user={user} />
                         </Item>
+
                     </Form>
                 </Editing>
             </DataGrid>
