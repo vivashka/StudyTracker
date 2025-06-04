@@ -1,6 +1,6 @@
 export async function createAssignment(assignment) {
     try {
-        const url = import.meta.env.REACT_BASE_URL + import.meta.env.REACT_ASSIGNMENTS_CREATE;
+        const url = import.meta.env.VITE_BASE_URL + import.meta.env.VITE_ASSIGNMENTS_CREATE;
 
         const response = await fetch(url, {
             method: 'POST', headers: {

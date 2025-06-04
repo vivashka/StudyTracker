@@ -1,6 +1,6 @@
 export async function updateAssignmentState(assignmentId, studentId, state) {
     try {
-        const url = import.meta.env.REACT_BASE_URL + import.meta.env.REACT_ASSIGNMENTS_STATE +
+        const url = import.meta.env.VITE_BASE_URL + import.meta.env.VITE_ASSIGNMENTS_STATE +
             "assignmentId" + assignmentId +
             "&studentId=" + studentId +
             "&state=" + state;

@@ -16,7 +16,7 @@ export const courseColumns = [{
     "visible": true,
     "dataField": "description",
     "dataType": "string",
-    "caption": "описание",
+    "caption": "Описание",
     "alignment": "left"
     }
 ]

@@ -1,6 +1,6 @@
 export async function getCourses(studentId) {
     try {
-        const url = import.meta.env.REACT_BASE_URL + import.meta.env.REACT_COURSES + studentId;
+        const url = import.meta.env.VITE_BASE_URL + import.meta.env.VITE_COURSES + studentId;
 
         const response = await fetch(url, {
             method: 'GET', headers: {

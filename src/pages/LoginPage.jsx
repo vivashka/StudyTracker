@@ -1,7 +1,7 @@
 import {loginModel} from "../domain/loginModel.js";
 import {useState} from "react";
 import {Form, LoadIndicator, TextBox} from "devextreme-react";
-import {ButtonItem, ButtonOptions, Item, Label, RequiredRule} from "devextreme-react/form.js";
+import {ButtonItem, ButtonOptions, Item, Label, RequiredRule} from "devextreme-react/form";
 import CryptoJS from 'crypto-js';
 import {login_fail, login_success} from "../redux/reducers/user.js";
 import store from "../redux/store.js";
@@ -15,7 +15,6 @@ export function LoginPage() {
     const [isLoading, setIsLoading] = useState(false);
     const [user, setUser] = useState({...loginModel});
     const isLoggedIn = useSelector(state => state.user.isLoggedIn)
-    const [isRegistration, setIsRegistration] = useState(false);
 
     function generateHash(Tabel, Pass) {
         let secret = `${Pass}${Tabel}`;

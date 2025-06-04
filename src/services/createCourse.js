@@ -1,6 +1,6 @@
 export async function createCourse(course) {
     try {
-        const url = import.meta.env.REACT_BASE_URL + import.meta.env.REACT_COURSES;
+        const url = import.meta.env.VITE_BASE_URL + import.meta.env.VITE_COURSES;
 
         const response = await fetch(url, {
             method: 'POST', headers: {

@@ -1,6 +1,6 @@
 export async function authentication(user) {
     try {
-        const url = import.meta.env.REACT_BASE_URL + import.meta.env.REACT_USER_AUTHENTICATION;
+        const url = import.meta.env.VITE_BASE_URL + import.meta.env.VITE_USER_AUTHENTICATION;
 
         const response = await fetch(url, {
             method: 'POST', headers: {
