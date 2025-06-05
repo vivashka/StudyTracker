@@ -1,9 +1,9 @@
-export async function assignCourse(courseId, studentId) {
+export async function getStudents() {
     try {
-        const url = import.meta.env.VITE_BASE_URL + import.meta.env.VITE_COURSES_ASSIGN + "courseId=" + courseId + "&studentId=" + studentId;
+        const url = import.meta.env.VITE_BASE_URL + import.meta.env.VITE_USERS;
 
         const response = await fetch(url, {
-            method: 'PUT', headers: {
+            method: 'GET', headers: {
                 'Content-Type': 'application/json',
             }
         })

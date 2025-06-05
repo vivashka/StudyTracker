@@ -4,7 +4,7 @@ import {DataGrid, Editing, FilterRow, Form} from "devextreme-react/data-grid";
 import {Item} from "devextreme-react/form";
 import {taskState} from "../domain/Enums/TaskState.js";
 
-export const TasksGrid = (currentCourse, user) => {
+export const TasksGrid = ({currentCourse, user}) => {
     let assignmentsStore;
     assignmentsStore = currentCourse ? createAssignmentsDataStore(currentCourse.courseId) : null;
     if (!assignmentsStore) return null;
@@ -18,15 +18,15 @@ export const TasksGrid = (currentCourse, user) => {
         <FilterRow visible={true}/>
         <Editing
             mode="popup"
-            allowUpdating={user.isAdmin}
+            allowUpdating={true}
             allowAdding={user.isAdmin}
             allowDeleting={user.isAdmin}
 
         >
             <Form>
-                <Item dataField={"name"} caption={"Название"}/>
-                <Item dataField={"description"} caption={"Описание"}/>
-                <Item dataField={"deadLine"} caption={"Срок сдачи"}/>
+                <Item dataField={"name"} caption={"Название"} editorOptions={{ readOnly: !user.user.isAdmin }}/>
+                <Item dataField={"description"} caption={"Описание"} editorOptions={{ readOnly: !user.user.isAdmin }}/>
+                <Item dataField={"deadLine"} caption={"Срок сдачи"} editorOptions={{ readOnly: !user.user.isAdmin }}/>
                 <Item
                     dataField="state"
                     caption="Состояние"

@@ -2,9 +2,9 @@ import {DataGrid, Editing, Popup, Form, FilterRow} from 'devextreme-react/data-g
 import {courseColumns} from "../domain/CoursesGrid";
 import {coursesDataStore} from "../domain/coursesDataStore";
 import {Item} from "devextreme-react/form";
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import {Button} from "devextreme-react";
-import {Navigate} from "react-router-dom";
+import {Navigate, useNavigate} from "react-router-dom";
 import store from "../redux/store.js";
 import {logout} from "../redux/reducers/user.js";
 import {TasksGrid} from "../components/TasksGrid.jsx";
@@ -16,6 +16,8 @@ export function CoursesPage() {
     const [currentCourse, setCurrentCourse] = useState(null);
     const user = store.getState().user;
 
+    const navigate = useNavigate();
+
     async function onCourseClick(course) {
         setCurrentCourse(course.data);
     }
@@ -26,11 +28,9 @@ export function CoursesPage() {
 
     function onExit(){
         store.dispatch(logout())
+        navigate("/login")
     }
 
-    if (!user?.user){
-        return <Navigate to="/login" />;
-    }
 
     return <div>
         <header className={"main-header"}>
@@ -62,19 +62,18 @@ export function CoursesPage() {
                         <Item itemType="group"
                               colCount={1}
                               colSpan={2}>
-                            <Item dataField={"name"}/>
-                            <Item dataField={"professor"}/>
-                            <Item dataField={"description"}/>
+                            <Item dataField={"name"} editorOptions={{ readOnly: !user.user.isAdmin }}/>
+                            <Item dataField={"professor"} editorOptions={{ readOnly: !user.user.isAdmin }}/>
+                            <Item dataField={"description"} editorOptions={{ readOnly: !user.user.isAdmin }}/>
 
                         </Item>
 
-                        <Item caption={'Студенты'}
-                            itemType="group"
-                            colCount={2}
-                            colSpan={2}>
-                           // <TaskStudents currentCourse={currentCourse} />
+                        {user.isAdmin && <Item caption={'Студенты'}
+                               itemType="group"
+                               colSpan={2}>
+                            <TaskStudents currentCourse={currentCourse}/>
 
-                        </Item>
+                        </Item>}
 
                         <Item itemType="group"
                               colCount={1}
