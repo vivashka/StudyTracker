@@ -24,9 +24,9 @@ export const TasksGrid = ({currentCourse, user}) => {
 
         >
             <Form>
-                <Item dataField={"name"} caption={"Название"} editorOptions={{ readOnly: !user.user.isAdmin }}/>
-                <Item dataField={"description"} caption={"Описание"} editorOptions={{ readOnly: !user.user.isAdmin }}/>
-                <Item dataField={"deadLine"} caption={"Срок сдачи"} editorOptions={{ readOnly: !user.user.isAdmin }}/>
+                <Item dataField={"name"} caption={"Название"} editorOptions={{ readOnly: !user.isAdmin }}/>
+                <Item dataField={"description"} caption={"Описание"} editorOptions={{ readOnly: !user.isAdmin }}/>
+                <Item dataField={"deadLine"} caption={"Срок сдачи"} editorOptions={{ readOnly: !user.isAdmin }}/>
                 <Item
                     dataField="state"
                     caption="Состояние"

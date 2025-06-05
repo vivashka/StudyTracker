@@ -14,7 +14,7 @@ export function CoursesPage() {
 
 
     const [currentCourse, setCurrentCourse] = useState(null);
-    const user = store.getState().user;
+    const user = store.getState().user.user;
 
     const navigate = useNavigate();
 
@@ -49,8 +49,8 @@ export function CoursesPage() {
                 <Editing
                     mode="popup"
                     allowUpdating={true}
-                    allowAdding={user.user.isAdmin}
-                    allowDeleting={user.user.isAdmin}
+                    allowAdding={user.isAdmin}
+                    allowDeleting={user.isAdmin}
 
                 >
                     <Popup
@@ -62,9 +62,9 @@ export function CoursesPage() {
                         <Item itemType="group"
                               colCount={1}
                               colSpan={2}>
-                            <Item dataField={"name"} editorOptions={{ readOnly: !user.user.isAdmin }}/>
-                            <Item dataField={"professor"} editorOptions={{ readOnly: !user.user.isAdmin }}/>
-                            <Item dataField={"description"} editorOptions={{ readOnly: !user.user.isAdmin }}/>
+                            <Item dataField={"name"} editorOptions={{ readOnly: !user.isAdmin }}/>
+                            <Item dataField={"professor"} editorOptions={{ readOnly: !user.isAdmin }}/>
+                            <Item dataField={"description"} editorOptions={{ readOnly: !user.isAdmin }}/>
 
                         </Item>
 
